@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes funcionario</title>
+</head>
+<body>
+   {% if funcionario %}
+   <h1>detalhes do funcionario {{ funcionario.nome }}</h1>
+
+   <ul>
+       <li><strong>Nome: </strong>{{ funcionario.nome }}</li>
+       <li><strong>Sobrenome: </strong>{{ funcionario.sobrenome }}</li>
+       <li><strong>Cpf: </strong>{{ funcionario.cpf }}</li>
+       <li><strong>Email: </strong>{{ funcionario.email }}</li>
+       <li><strong>Remuneração: </strong>{{ funcionario.remuneracao }}</li>
+   </ul>
+   {% else %}
+        <h1>Nenhum funcionario encontrado com esse ID</h1>
+   {% endif %}
+</body>
+</html>
