@@ -1,13 +1,13 @@
 from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import render
+from django.views.generic import TemplateView
 
 from erp.forms import FormFuncionario
 from erp.models import Funcionario
 
 
-def home(request: HttpRequest):
-    if request.method == "GET":
-        return render(request, template_name="erp/index.html")
+class HomeView(TemplateView):
+    template_name = "erp/index.html"
 
 
 def cria_funcionario(request: HttpRequest):
@@ -53,3 +53,24 @@ def busca_por_id(request: HttpRequest, pk: int):
             template_name="erp/funcionarios/detalhe.html",
             context={"funcionario": funcionario},
         )
+
+
+def atualiza_funcionario(request: HttpRequest, pk: int):
+    if request.method == "GET":
+        funcionario = Funcionario.objects.get(pk=pk)
+        form = FormFuncionario(instance=funcionario)
+
+        return render(
+            request,
+            template_name="erp/funcionarios/atualiza.html",
+            context={"form": form},
+        )
+
+    elif request.method == "POST":
+        funcionario = Funcionario.objects.get(pk=pk)
+        form - FormFuncionario(request.POST, instance=funcionario)
+
+        if form.is_valid():
+            form.save()
+
+            return HttpResponseRedirect(redirect_to=f"/funcionarios/detalhe/{pk}")
